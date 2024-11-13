@@ -12,6 +12,7 @@
 -e file:.
 beautifulsoup4==4.12.3
     # via rs-downloader
+fire==0.7.0
 greenlet==3.0.3
     # via playwright
 playwright==1.47.0
@@ -21,5 +22,7 @@ pyee==12.0.0
 ruff==0.6.9
 soupsieve==2.6
     # via beautifulsoup4
+termcolor==2.5.0
+    # via fire
 typing-extensions==4.12.2
     # via pyee
