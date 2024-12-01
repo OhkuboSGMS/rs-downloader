@@ -94,6 +94,7 @@ async def main(
     parent_dir: str,
     memo_path: str = "memo.json",
     timeout: int = 30 * 1000,
+    strft: str = "%Y/%m/%d",
 ):
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)
@@ -127,7 +128,7 @@ async def main(
                             # parent_dir/year/month/day/title/file_name に保存
                             dst_dir = (
                                 Path(parent_dir)
-                                / record_data["recorded_date"].strftime("%y/%m/%d")
+                                / record_data["recorded_date"].strftime(strft)
                                 / record_data["title"]
                             )
                             if not dst_dir.exists():
