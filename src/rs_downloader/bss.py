@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup
 
@@ -37,12 +37,17 @@ def extract_recording(element: BeautifulSoup):
     )
     record_date = date_element.text if date_element else "No date found"
     record_date = record_date.strip()
-    match = re.search(r"\b\w{3} \d{1,2}, \d{4} \d{1,2}:\d{2} (AM|PM)\b", record_date)
+    match_1 = re.search(r"\b\w{3} \d{1,2}, \d{4} \d{1,2}:\d{2} (AM|PM)\b", record_date)
+    match_2 = re.match(r"Recorded (\d+) hours ago", record_date)
+
     # 日付が見つかった場合は返す、見つからなければ空文字を返す
-    if match:
-        date_str = match.group(0)
+    if match_1:
+        date_str = match_1.group(0)
         # 日付文字列をdatetimeオブジェクトに変換
         record_date = datetime.strptime(date_str, "%b %d, %Y %I:%M %p")
+    elif match_2:
+        hours_ago = int(match_2.group(1))  # 数字を取得して整数に変換
+        record_date = datetime.now() - timedelta(hours=hours_ago)
     elif record_date in {"Recorded an hour ago"}:
         record_date = datetime.now()
     else:

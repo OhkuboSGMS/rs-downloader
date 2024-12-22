@@ -62,7 +62,7 @@ async def download_recordings(page, dst_dir: str):
         section_text = await asyncio.gather(
             *[section.text_content() for section in download_section]
         )
-        filter_sections = ["All participants", "Transcript", "AI Voice"]
+        filter_sections = ["All participants", "Transcript", "AI Voice","sscreenshare_hd"]
         # 不要なセクションを除外
         download_candidates = list(
             filter(
