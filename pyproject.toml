@@ -1,6 +1,6 @@
 [project]
 name = "rs-downloader"
-version = "0.1.2"
+version = "0.1.4"
 description = "download audio from rs"
 authors = [
     { name = "OhkuboSGMS", email = "ginger.os777146th@gmail.com" }

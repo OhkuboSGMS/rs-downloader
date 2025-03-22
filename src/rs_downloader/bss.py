@@ -27,13 +27,13 @@ def extract_project(element: BeautifulSoup) -> dict:
 def extract_recording(element: BeautifulSoup):
     # タイトルを取得
     title_element = element.find(
-        "span", {"data-automation-class": "recordings recording-title"}
+        "span", {"data-testid": "recordings recording-title"}
     )
     title = title_element.text if title_element else "No title found"
 
     # レコードの日付を取得
     date_element = element.find(
-        "span", {"data-automation-class": "recordings recording-date"}
+        "span", {"data-testid": "recordings recording-date"}
     )
     record_date = date_element.text if date_element else "No date found"
     record_date = record_date.strip()
