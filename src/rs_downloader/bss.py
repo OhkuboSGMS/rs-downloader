@@ -26,19 +26,16 @@ def extract_project(element: BeautifulSoup) -> dict:
 
 def extract_recording(element: BeautifulSoup):
     # タイトルを取得
-    title_element = element.find(
-        "span", {"data-testid": "recordings recording-title"}
-    )
+    title_element = element.find("span", {"data-testid": "recordings recording-title"})
     title = title_element.text if title_element else "No title found"
 
     # レコードの日付を取得
-    date_element = element.find(
-        "span", {"data-testid": "recordings recording-date"}
-    )
+    date_element = element.find("span", {"data-testid": "recordings recording-date"})
     record_date = date_element.text if date_element else "No date found"
     record_date = record_date.strip()
     match_1 = re.search(r"\b\w{3} \d{1,2}, \d{4} \d{1,2}:\d{2} (AM|PM)\b", record_date)
     match_2 = re.match(r"Recorded (\d+) hours ago", record_date)
+    match_3 = re.match(r"Recorded a day ago", record_date)
 
     # 日付が見つかった場合は返す、見つからなければ空文字を返す
     if match_1:
@@ -48,6 +45,9 @@ def extract_recording(element: BeautifulSoup):
     elif match_2:
         hours_ago = int(match_2.group(1))  # 数字を取得して整数に変換
         record_date = datetime.now() - timedelta(hours=hours_ago)
+    elif match_3:
+        day_ago = 1
+        record_date = datetime.now() - timedelta(days=day_ago)
     elif record_date in {"Recorded an hour ago"}:
         record_date = datetime.now()
     else:
